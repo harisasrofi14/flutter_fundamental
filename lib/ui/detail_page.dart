@@ -27,43 +27,109 @@ class RestaurantDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      restaurant.description,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                  Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Row(children: <Widget>[
+                      Icon(Icons.place),
+                      Text(
+                        restaurant.city,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ]),
                   ),
                   Container(
-                      padding: EdgeInsets.all( 4.0),
+                      padding: EdgeInsets.all(4.0),
                       child: Row(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: RatingBar.builder(
-                              initialRating: restaurant.rating.toDouble(),
-                              minRating: 1,
-                              itemSize: 20,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 2.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
+                          RatingBar.builder(
+                            initialRating: restaurant.rating.toDouble(),
+                            minRating: 1,
+                            itemSize: 20,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
                             ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           ),
                           Text(
                             restaurant.rating.toString(),
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],
-                      )),
+                      ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      restaurant.description,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                  Divider(color: Colors.black),
+                  Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      "Drink",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    padding: EdgeInsets.only(left: 4.0),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: restaurant.menus.drinks.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: Card(
+                            color: Colors.amberAccent,
+                            child: Center(
+                              child: Text(
+                                restaurant.menus.drinks[index].name,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 4.0, top: 15.0),
+                    child: Text(
+                      "Food",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    padding: EdgeInsets.only(left: 4.0),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: restaurant.menus.foods.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: Card(
+                            color: Colors.amberAccent,
+                            child: Center(
+                              child: Text(
+                                restaurant.menus.foods[index].name,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             )

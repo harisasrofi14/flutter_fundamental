@@ -25,7 +25,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
             textTheme: myTextTheme.apply(bodyColor: Colors.black),
             elevation: 0),
-        pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),TargetPlatform.iOS : CupertinoPageTransitionsBuilder()}),
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
+        }),
       ),
       initialRoute: SplashScreenPage.routeName,
       routes: {
