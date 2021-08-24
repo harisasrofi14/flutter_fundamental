@@ -12,23 +12,23 @@ class RestaurantDetailResult {
   RestaurantDetailResult({
     required this.error,
     required this.message,
-    required this.restaurant,
+    required this.restaurantDetail,
   });
 
   bool error;
   String message;
-  Restaurant restaurant;
+  RestaurantDetail restaurantDetail;
 
   factory RestaurantDetailResult.fromJson(Map<String, dynamic> json) =>
       RestaurantDetailResult(
         error: json["error"],
         message: json["message"],
-        restaurant: Restaurant.fromJson(json["restaurant"]),
+        restaurantDetail: RestaurantDetail.fromJson(json["restaurant"]),
       );
 
   Map<String, dynamic> toJson() => {
         "error": error,
         "message": message,
-        "restaurant": restaurant.toJson(),
+        "restaurant": restaurantDetail.toJson(),
       };
 }

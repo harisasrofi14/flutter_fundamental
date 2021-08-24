@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 final Color primaryColor = Colors.white;
 final Color secondaryColor = Colors.orangeAccent;
+final Color darkPrimaryColor = Color(0xFF000000);
+final Color darkSecondaryColor = Color(0xff64ffda);
 
 final TextTheme myTextTheme = TextTheme(
   headline1: GoogleFonts.merriweather(
@@ -10,7 +12,7 @@ final TextTheme myTextTheme = TextTheme(
   headline2: GoogleFonts.merriweather(
       fontSize: 57, fontWeight: FontWeight.w300, letterSpacing: -0.5),
   headline3:
-  GoogleFonts.merriweather(fontSize: 46, fontWeight: FontWeight.w400),
+      GoogleFonts.merriweather(fontSize: 46, fontWeight: FontWeight.w400),
   headline4: GoogleFonts.merriweather(
       fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
   headline5: GoogleFonts.merriweather(
@@ -30,5 +32,57 @@ final TextTheme myTextTheme = TextTheme(
   caption: GoogleFonts.libreFranklin(
       fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
   overline: GoogleFonts.libreFranklin(
-      fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+      fontSize: 32,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.5,
+      color: Colors.white),
+);
+
+final ThemeData lightTheme = ThemeData(
+  primaryColor: primaryColor,
+  accentColor: secondaryColor,
+  scaffoldBackgroundColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: myTextTheme,
+  appBarTheme: AppBarTheme(
+      textTheme: myTextTheme.apply(bodyColor: Colors.black), elevation: 0),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedItemColor: secondaryColor, unselectedItemColor: Colors.grey),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: secondaryColor,
+      textStyle: TextStyle(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(0),
+        ),
+      ),
+    ),
+  ),
+);
+
+final ThemeData darkTheme = ThemeData.dark().copyWith(
+  primaryColor: darkPrimaryColor,
+  accentColor: darkSecondaryColor,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: myTextTheme,
+  appBarTheme: AppBarTheme(
+    textTheme: myTextTheme.apply(bodyColor: Colors.white),
+    elevation: 0,
+  ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: darkSecondaryColor,
+    unselectedItemColor: Colors.grey,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: secondaryColor,
+      textStyle: TextStyle(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(0),
+        ),
+      ),
+    ),
+  ),
 );

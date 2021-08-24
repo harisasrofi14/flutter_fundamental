@@ -15,7 +15,6 @@ class CurvePainter extends CustomPainter {
         size.width / 2, size.height / 0.9, size.width, size.height * 0.8);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
-
     canvas.drawPath(path, paint);
   }
 

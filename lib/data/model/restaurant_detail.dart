@@ -1,5 +1,5 @@
-class Restaurant {
-  Restaurant({
+class RestaurantDetail {
+  RestaurantDetail({
     this.id,
     this.name,
     this.description,
@@ -23,7 +23,7 @@ class Restaurant {
   double? rating;
   List<CustomerReview>? customerReviews;
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
+  factory RestaurantDetail.fromJson(Map<String, dynamic> json) => RestaurantDetail(
         id: json["id"],
         name: json["name"],
         description: json["description"],

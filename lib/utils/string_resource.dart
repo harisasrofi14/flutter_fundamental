@@ -7,5 +7,7 @@ class StringTranslation {
   static const String exceptionMessage = "Failed to load Data";
   static const String emptyData = "Empty Data";
   static const String appTitle = "Find your Restaurant";
+  static const String comingSoonTitle ="Coming Soon!";
+  static const String comingSoonDesc = "Features are coming soon!";
 
 }

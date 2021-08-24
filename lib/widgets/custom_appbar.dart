@@ -1,14 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/provider/preferences_provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/ui/favorites_page.dart';
+import 'package:restaurant_app/ui/settings_page.dart';
 import 'package:restaurant_app/utils/string_resource.dart';
 import 'package:restaurant_app/widgets/curve_painter.dart';
 
 class CustomAppbar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   RestaurantProvider provider;
+  PreferencesProvider preferencesProvider;
 
-  CustomAppbar({required this.expandedHeight, required this.provider});
+  CustomAppbar(
+      {required this.expandedHeight,
+      required this.provider,
+      required this.preferencesProvider});
 
   @override
   Widget build(
@@ -18,19 +25,33 @@ class CustomAppbar extends SliverPersistentHeaderDelegate {
       fit: StackFit.expand,
       children: [
         Container(
-            color: Colors.white,
+            color: preferencesProvider.isDarkTheme
+                ? Color(0xff303030)
+                : Colors.white,
             child: CustomPaint(
               painter: CurvePainter(),
             )),
         Positioned(
-          bottom: 85,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Text(
-              StringTranslation.appTitle,
-              style: Theme.of(context).textTheme.headline6,
+          top: 0,
+          right: 16,
+          child: SafeArea(
+            child: IconButton(
+              icon: Icon(Icons.settings),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingPage()));
+              },
             ),
+          ),
+        ),
+        Positioned(
+          bottom: 70,
+          left: 20,
+          right: 20,
+          child: Text(
+            greetingTime(),
+            style: Theme.of(context).textTheme.overline,
           ),
         ),
         Positioned(
@@ -45,7 +66,7 @@ class CustomAppbar extends SliverPersistentHeaderDelegate {
                   elevation: 10,
                   child: SizedBox(
                     height: 50,
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: MediaQuery.of(context).size.width - 100,
                     child: Form(
                       child: Container(
                         child: TextFormField(
@@ -67,7 +88,21 @@ class CustomAppbar extends SliverPersistentHeaderDelegate {
                       ),
                     ),
                   ),
-                )
+                ),
+                Card(
+                  elevation: 10,
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: IconButton(
+                      icon: Icon(Icons.favorite),
+                      color: Colors.orange,
+                      onPressed: () {
+                        Navigator.pushNamed(context, FavoritesPage.routeName);
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -84,4 +119,18 @@ class CustomAppbar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+
+  String greetingTime() {
+    DateTime now = new DateTime.now();
+    int hour = now.hour;
+    if (hour >= 0 && hour < 12) {
+      return "Good Morning";
+    } else if (hour >= 12 && hour < 16) {
+      return "Good Afternoon";
+    } else if (hour >= 16 && hour < 21) {
+      return "Good Evening";
+    } else {
+      return "Good Night";
+    }
+  }
 }

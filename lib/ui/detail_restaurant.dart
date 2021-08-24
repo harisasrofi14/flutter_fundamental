@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/preferences_provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/utils/config.dart';
 import 'package:restaurant_app/utils/string_resource.dart';
@@ -15,14 +16,15 @@ import 'package:restaurant_app/widgets/platform_widget.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
   Widget _buildList(BuildContext context) {
-    return Consumer<RestaurantProvider>(builder: (context, state, _) {
+    return Consumer2<RestaurantProvider, PreferencesProvider>(
+        builder: (context, restaurantProvider, preferenceProvider, _) {
       var restaurant;
-      if (state.detailRestaurant != null) {
-        restaurant = state.detailRestaurant!.restaurant;
+      if (restaurantProvider.detailRestaurant != null) {
+        restaurant = restaurantProvider.detailRestaurant!.restaurantDetail;
       }
-      if (state.state == ResultState.Loading) {
+      if (restaurantProvider.state == ResultState.Loading) {
         return Center(child: Lottie.asset('assets/json/loading.json'));
-      } else if (state.state == ResultState.HasData) {
+      } else if (restaurantProvider.state == ResultState.HasData) {
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -35,13 +37,17 @@ class DetailRestaurantPage extends StatelessWidget {
                 padding: EdgeInsets.all(12),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: preferenceProvider.isDarkTheme
+                          ? Color(0xff303030)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
                             blurRadius: 2,
                             spreadRadius: 0.1,
-                            color: Colors.grey)
+                            color: preferenceProvider.isDarkTheme
+                                ? Color(0xff303030)
+                                : Colors.grey)
                       ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +65,10 @@ class DetailRestaurantPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(6.0),
                         child: Row(children: <Widget>[
-                          Icon(Icons.place),
+                          Icon(
+                            Icons.place,
+                            color: secondaryColor,
+                          ),
                           Text(
                             "${restaurant.address}, ${restaurant.city}",
                             maxLines: 1,
@@ -112,7 +121,7 @@ class DetailRestaurantPage extends StatelessWidget {
             ],
           ),
         );
-      } else if (state.state == ResultState.Error) {
+      } else if (restaurantProvider.state == ResultState.Error) {
         return Center(
           child: Text(StringTranslation.errorMessage),
         );
@@ -175,7 +184,7 @@ class DetailRestaurantPage extends StatelessWidget {
     return foodImages[0];
   }
 
-  menuItem(BuildContext context, Restaurant result, String menuType) {
+  menuItem(BuildContext context, RestaurantDetail result, String menuType) {
     return Column(
       children: [
         Container(
@@ -198,8 +207,8 @@ class DetailRestaurantPage extends StatelessWidget {
               ),
             ])),
         Container(
-          height: MediaQuery.of(context).size.height * 0.2,
-          padding: EdgeInsets.only(left: 4.0, bottom: 20),
+          height: MediaQuery.of(context).size.height * 0.25,
+          padding: EdgeInsets.only(left: 4.0, bottom: 10),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: menuType == Config.IMAGE_FOOD
@@ -209,7 +218,6 @@ class DetailRestaurantPage extends StatelessWidget {
               return Container(
                 padding: EdgeInsets.only(bottom: 5, top: 5),
                 width: MediaQuery.of(context).size.width * 0.3,
-                //height: MediaQuery.of(context).size.height * 0.34,
                 child: Card(
                   //margin: EdgeInsets.all(10),
                   color: Colors.orangeAccent,

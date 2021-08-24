@@ -45,7 +45,7 @@ class RestaurantProvider extends ChangeNotifier {
       notifyListeners();
       final restaurant = await apiService.restaurantDetail(id);
 
-      if (restaurant.restaurant.id != null) {
+      if (restaurant.restaurantDetail.id != null) {
         _state = ResultState.HasData;
         notifyListeners();
         return _restaurantDetailResult = restaurant;
