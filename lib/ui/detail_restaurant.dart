@@ -207,7 +207,7 @@ class DetailRestaurantPage extends StatelessWidget {
               ),
             ])),
         Container(
-          height: MediaQuery.of(context).size.height * 0.25,
+          height: MediaQuery.of(context).size.height * 0.2,
           padding: EdgeInsets.only(left: 4.0, bottom: 10),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -215,35 +215,30 @@ class DetailRestaurantPage extends StatelessWidget {
                 ? result.menus!.foods.length
                 : result.menus!.drinks.length,
             itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.only(bottom: 5, top: 5),
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Card(
-                  //margin: EdgeInsets.all(10),
-                  color: Colors.orangeAccent,
-                  child: Column(children: [
-                    Padding(
-                      padding: EdgeInsets.all(6),
-                      child: Image.asset(
-                        getImage(menuType),
-                        width: 90,
+              return Card(
+                color: Colors.orangeAccent,
+                child: Column(children: [
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Image.asset(
+                      getImage(menuType),
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Center(
+                      child: Text(
+                        menuType == Config.IMAGE_FOOD
+                            ? result.menus!.foods[index].name
+                            : result.menus!.drinks[index].name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Center(
-                        child: Text(
-                          menuType == Config.IMAGE_FOOD
-                              ? result.menus!.foods[index].name
-                              : result.menus!.drinks[index].name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
+                  ),
+                ]),
               );
             },
           ),
